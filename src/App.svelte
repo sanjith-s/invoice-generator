@@ -47,6 +47,12 @@
     amount: "",
   };
 
+  let paymentDetails = {
+    total: "",
+    paid: "",
+    balance: "",
+  }
+
   let items = [itemObj];
 
   const handleChange = (id, e) => {
@@ -153,13 +159,13 @@
       <hr/>
       <div id="invoiceDetails" class="details">
         <span class="title2">Invoice Details</span>
-        <label><input id="number" type="text" placeholder="Invoice Number"
+        <label>Invoice No: <input id="number" type="text"
           bind:value={invoiceDetails.number}
         /></label>
-        <label><input id="date" type="date" 
+        <label>Invoice Date: <input id="date" type="date" 
           bind:value={invoiceDetails.date}
         /></label>
-        <label><input id="term" type="text" placeholder="Invoice Term"
+        <label>Invoice Term: <input id="term" type="text"
           bind:value={invoiceDetails.term}
         /></label>
       </div>
@@ -170,12 +176,25 @@
       <span class="title2">Items</span>
       {#each items as item, id}
         <Item idxid={id} {...item} {handleChange} {removeItem} />
-        <hr />
+        <hr/>
       {/each}
     </div>
+
+    <div id="paymentDetails" class="details">
+      <span class="title2">Payment Details</span>
+      <label>Total Amount: <input id="number" type="text"
+        bind:value={paymentDetails.total}
+      /></label>
+      <label>Amount Paid: <input id="date" type="text" 
+        bind:value={paymentDetails.paid}
+      /></label>
+      <label>Balance Due: <input id="term" type="text"
+        bind:value={paymentDetails.balance}
+      /></label>
+    </div>
+
     <button type="button" class="add" on:click={addItem}>
-      <i class="fa-solid fa-plus" /> Add Item</button
-    >
+      <i class="fa-solid fa-plus" /> Add Item</button>
   </div>
 </form>
 
