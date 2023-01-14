@@ -159,13 +159,13 @@
       <hr/>
       <div id="invoiceDetails" class="details">
         <span class="title2">Invoice Details</span>
-        <label>Invoice No: <input id="number" type="text"
+        <label>Invoice No: <input id="inumber" type="text"
           bind:value={invoiceDetails.number}
         /></label>
-        <label>Invoice Date: <input id="date" type="date" 
+        <label>Invoice Date: <input id="idate" type="date" 
           bind:value={invoiceDetails.date}
         /></label>
-        <label>Invoice Term: <input id="term" type="text"
+        <label>Invoice Term: <input id="iterm" type="text"
           bind:value={invoiceDetails.term}
         /></label>
       </div>
@@ -180,25 +180,28 @@
       {/each}
     </div>
 
-    <div id="paymentDetails" class="details">
-      <span class="title2">Payment Details</span>
-      <label>Total Amount: <input id="number" type="text"
-        bind:value={paymentDetails.total}
-      /></label>
-      <label>Amount Paid: <input id="date" type="text" 
-        bind:value={paymentDetails.paid}
-      /></label>
-      <label>Balance Due: <input id="term" type="text"
-        bind:value={paymentDetails.balance}
-      /></label>
-    </div>
-
     <button type="button" class="add" on:click={addItem}>
       <i class="fa-solid fa-plus" /> Add Item</button>
+
+    <div id="paymentDetails" class="details">
+      <span class="title2">Payment Details</span>
+      <label>Total Amount: <input id="ptotal" type="text"
+        bind:value={paymentDetails.total}
+      /></label>
+      <label>Amount Paid: <input id="pamt" type="text" 
+        bind:value={paymentDetails.paid}
+      /></label>
+      <label>Balance Due: <input id="pbal" type="text"
+        bind:value={paymentDetails.balance}
+      /></label>
+    </div>  
+
+    <button type="button" class="generate" on:click={generateInvoice}>
+      <i class="fa-regular fa-file"></i> Generate Invoice</button>
   </div>
 </form>
 
-<!-- Iconss -->
+<!-- Iconss --> 
 <link
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
@@ -266,7 +269,7 @@
     font-weight: 600;
   }
 
-  .add {
+  .generate {
     background: #0066ff;
     border-radius: 999px;
     box-shadow: #005de2 0 10px 20px -10px;
@@ -290,6 +293,49 @@
     word-break: break-word;
     border: 0;
   }
+
+  .add{
+  background-color: #FFFFFF;
+  border: 1px solid #222222;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #12B76A;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+  margin: 0;
+  outline: none;
+  padding: 13px 23px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  touch-action: manipulation;
+  transition: box-shadow .2s,-ms-transform .1s,-webkit-transform .1s,transform .1s;
+  user-select: none;
+  -webkit-user-select: none;
+  width: auto;
+}
+
+.add:focus-visible {
+  box-shadow: #14B789 0 0 0 2px, rgba(255, 255, 255, 0.8) 0 0 0 4px;
+  transition: box-shadow .2s;
+}
+
+.add:active {
+  background-color: #F7F7F7;
+  border-color: #14B789;
+  transform: scale(.96);
+}
+
+.add:disabled {
+  border-color: #DDDDDD;
+  color: #DDDDDD;
+  cursor: not-allowed;
+  opacity: 1;
+}
 
   #titleBox {
     display: flex;
