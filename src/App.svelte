@@ -1,4 +1,5 @@
-<script>
+  <script>
+  import { HtmlTag } from "svelte/internal";
   import ImgBox from "./lib/ImgBox.svelte";
   import Item from "./lib/Item.svelte";
 
@@ -88,11 +89,29 @@
 
   function generateInvoice() {
     // Generate the invoice
+    const invoice = document.getElementById("invoice");
+    console.log(invoice);
+    // console.log(window);
+    var opt={
+      margin: 1,
+      filename: 'invoice.pdf',
+      image: {type:'jpeg', quality: 1},
+      html2canvas: {scale: 2},
+      jsPDF: {unit: 'in', format: 'letter', orientation: 'portrait'}
+    }
+
+    // @ts-ignore
+    html2pdf().from(invoice).set(opt).save();
+
   }
 </script>
 
+<div class="heading">
+  <h1>Invoice Generator</h1>
+</div>
+
 <form>
-  <div class="invoiceBox">
+  <div class="invoiceBox"  id="invoice">
     <div id="titleBox">
       <span class="title1">Invoice</span>
       <ImgBox />
@@ -235,6 +254,7 @@
     font-family: "Inter", sans-serif;
     font-size: 16px;
     margin: auto;
+    width: 100%;
   }
 
   .grid-container {
@@ -255,7 +275,7 @@
     display: flex;
     flex-direction: column;
     row-gap: 30px;
-    width: 100%;
+    width: auto;
     padding: 20px;
     border-radius: 10px;
   }
@@ -268,6 +288,28 @@
     font-size: 48px;
     font-weight: 600;
   }
+
+  .heading h1 {
+    text-align: center;
+    font-size:30px; font-weight:300; color:#222; letter-spacing:5px;
+    text-transform: uppercase;
+    color:white;
+    display: grid;
+    width:100%;
+    grid-template-columns: 1fr max-content 1fr;
+    grid-template-rows: 20px 0;
+    grid-gap: 20px;
+    align-items: center;
+}
+
+  .heading h1:after,.heading h1:before {
+    content: " ";
+    display: block;
+    border-bottom: 1px solid #000;
+    border-top: 1px solid #000;
+    height: 4px;
+    background-color:#f8f8f8;
+}
 
   .generate {
     background: #0066ff;
