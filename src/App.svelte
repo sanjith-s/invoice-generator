@@ -56,22 +56,60 @@
 
   let items = [itemObj];
 
+  let consolidatedPrice = {
+    subtotal: 0,
+    cgst: 0,
+    sgst: 0,
+    total: 0,
+  }
+
   const handleChange = (id, e) => {
     //console.log(id, e.target.id, e.target.value);
     let nameKey = e.target.id;
     items[id][nameKey] = e.target.value;
-    console.log(items);
+    
+    //console.log(items);
 
     let item = items[id];
     let price = parseFloat(item.price);
     let quantity = parseFloat(item.quantity);
     let gst = parseFloat(item.gst);
 
+
+    if(isNaN(price) || isNaN(quantity) || isNaN(gst)) {
+      return;
+    }
+
     let gstamt = price * quantity * (gst / 100);
+
     item.cgst = (gstamt / 2).toFixed(2);
     item.sgst = (gstamt / 2).toFixed(2);
     item.amount = (price * quantity * (1 + gst / 100)).toFixed(2);
     items[id] = { ...item };
+
+    let subtotal = 0;;
+    let totalCgst = 0;
+    let totalSgst = 0;
+    let total = 0;
+
+    for (let item of items) {
+      let itmTot = parseFloat(item.amount);
+      let itmCgst = parseFloat(item.cgst);
+      let itmSgst =  parseFloat(item.sgst);
+
+      subtotal += itmTot-(itmCgst+itmSgst);
+      totalCgst += itmCgst;
+      totalSgst += itmSgst;
+      total += itmTot;
+    }
+
+    consolidatedPrice.subtotal = subtotal;
+    consolidatedPrice.cgst = totalCgst;
+    consolidatedPrice.sgst = totalSgst;
+    consolidatedPrice.total = total;
+
+    console.log(consolidatedPrice);
+
   };
 
   const addItem = () => {
@@ -82,8 +120,17 @@
   };
 
   const removeItem = (id) => {
-    items.splice(id, 1);
+
+    if(items.length == 1) return;
+
+    let remItem = items.splice(id, 1)[0];
     items = [...items];
+
+    consolidatedPrice.subtotal -= (parseFloat(remItem.amount) - (parseFloat(remItem.cgst)+parseFloat(remItem.sgst)));
+    consolidatedPrice.cgst -= parseFloat(remItem.cgst);
+    consolidatedPrice.sgst -= parseFloat(remItem.sgst);
+    consolidatedPrice.total -= parseFloat(remItem.amount);
+
     console.log(items);
   };
 
@@ -202,7 +249,7 @@
     <button type="button" class="add" on:click={addItem}>
       <i class="fa-solid fa-plus" /> Add Item</button>
 
-    <div id="paymentDetails" class="details">
+    <!-- <div id="paymentDetails" class="details">
       <span class="title2">Payment Details</span>
       <label>Total Amount: <input id="ptotal" type="text"
         bind:value={paymentDetails.total}
@@ -213,10 +260,27 @@
       <label>Balance Due: <input id="pbal" type="text"
         bind:value={paymentDetails.balance}
       /></label>
-    </div>  
+    </div>   -->
+
+    <div class="totalBox">
+      
+      {#if consolidatedPrice.total > 0 && !isNaN(consolidatedPrice.total)}
+      <div>Subtotal ₹{consolidatedPrice.subtotal}</div>
+      <div>CGST ₹{consolidatedPrice.cgst}</div>
+      <div>SGST ₹{consolidatedPrice.sgst}</div>
+      <div>Total ₹{consolidatedPrice.total}</div>
+        {:else}
+        <div>Subtotal ₹0.00</div>
+        <div>CGST ₹0.00</div>
+        <div>SGST ₹0.00</div>
+        <div>Total ₹0.00</div>
+        {/if}
+    </div>
 
     <button type="button" class="generate" on:click={generateInvoice}>
       <i class="fa-regular fa-file"></i> Generate Invoice</button>
+    
+    
   </div>
 </form>
 
@@ -384,5 +448,11 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+  }
+  
+  .totalBox {
+    display: flex;
+    flex-direction: column;
+    float: right;
   }
 </style>
