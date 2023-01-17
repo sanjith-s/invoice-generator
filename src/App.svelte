@@ -467,6 +467,7 @@
     border: 1px solid #B9B9B9;
     border-radius: 4px;
     padding: .4rem;
+    width: 50%;
   }
 
   .input-width{
