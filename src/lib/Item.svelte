@@ -119,4 +119,15 @@
     font-weight: 600;
     font-size: 18px;
   }
+
+  input {
+    background: #FFFFFF;
+    border: 1px solid #B9B9B9;
+    border-radius: 4px;
+    padding: .4rem;
+  }
+
+  #name {
+    width: 50%;
+  }
 </style>
