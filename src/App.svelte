@@ -223,6 +223,25 @@
     </div>
 
     <div>
+      <div id="invoiceDetails" class="details">
+        <span class="title2">Invoice Details</span>
+        <label>Invoice No<br/><input id="inumber" class="input-width" type="text"
+          bind:value={invoiceDetails.number}
+        /></label>
+        <label>Invoice Date<br/><input id="idate" type="date" class="input-width"
+          bind:value={invoiceDetails.date}
+        /></label>
+        <label>Invoice Term<br/><input id="iterm" type="text" class="input-width"
+          bind:value={invoiceDetails.term}
+        /></label>
+
+        <!-- <label>Notes<br/><input id="inotes" type="text" class="input-width"
+          bind:value={invoiceDetails.notes}
+        /></label> -->
+      </div>
+    </div>
+
+    <div>
       <span class="title2">Items</span>
       {#each items as item, id}
         <Item idxid={id} {...item} {handleChange} {removeItem} />
@@ -263,7 +282,7 @@
 
     <div>
       <div id="invoiceDetails" class="details">
-        <span class="title2">Invoice Details</span>
+        <!-- <span class="title2">Invoice Details</span>
         <label>Invoice No<br/><input id="inumber" class="input-width" type="text"
           bind:value={invoiceDetails.number}
         /></label>
@@ -272,7 +291,7 @@
         /></label>
         <label>Invoice Term<br/><input id="iterm" type="text" class="input-width"
           bind:value={invoiceDetails.term}
-        /></label>
+        /></label> -->
 
         <label>Notes<br/><input id="inotes" type="text" class="input-width"
           bind:value={invoiceDetails.notes}
