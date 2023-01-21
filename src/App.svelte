@@ -1,4 +1,6 @@
   <script>
+// @ts-nocheck
+
   import { HtmlTag } from "svelte/internal";
   import ImgBox from "./lib/ImgBox.svelte";
   import Item from "./lib/Item.svelte";
@@ -135,6 +137,18 @@
     console.log(items);
   };
 
+  function calcPayment(){
+    var t = consolidatedPrice.total;
+    var total = document.getElementById("totalamt");
+    var pamt  = document.getElementById("pamt");
+    var a = pamt.value;
+
+    var bal = +t - +a
+    var balance = document.getElementById("pbalance");
+    balance.innerText = "₹" + +bal; 
+    console.log(total);
+  }
+
   function generateInvoice() {
     // Generate the invoice
     const invoice = document.getElementById("invoice");
@@ -234,10 +248,6 @@
         <label>Invoice Term<br/><input id="iterm" type="text" class="input-width"
           bind:value={invoiceDetails.term}
         /></label>
-
-        <!-- <label>Notes<br/><input id="inotes" type="text" class="input-width"
-          bind:value={invoiceDetails.notes}
-        /></label> -->
       </div>
     </div>
 
@@ -252,19 +262,6 @@
     <button type="button" class="add" on:click={addItem}>
       <i class="fa-solid fa-plus" /> Add Item</button>
 
-    <!-- <div id="paymentDetails" class="details">
-      <span class="title2">Payment Details</span>
-      <label>Total Amount: <input id="ptotal" type="text"
-        bind:value={paymentDetails.total}
-      /></label>
-      <label>Amount Paid: <input id="pamt" type="text" 
-        bind:value={paymentDetails.paid}
-      /></label>
-      <label>Balance Due: <input id="pbal" type="text"
-        bind:value={paymentDetails.balance}
-      /></label>
-    </div>   -->
-
     <div id="totalBox">
       
       {#if consolidatedPrice.total > 0 && !isNaN(consolidatedPrice.total)}
@@ -276,23 +273,19 @@
         <div class="total-box-child">Subtotal <span class="total-bold-text">₹0.00</span></div>
         <div class="total-box-child">CGST <span class="total-bold-text">₹0.00</span></div>
         <div class="total-box-child">SGST <span class="total-bold-text">₹0.00</span></div>
-        <div class="total-box-child">Total <span class="total-bold-text">₹0.00</span></div>
+        <div class="total-box-child">Total <span id="totalamt" class="total-bold-text">₹0.00</span></div>
         {/if}
+    </div>
+
+    <div id="paymentDetails" class="details">
+      <span class="title2">Payment Details</span>
+      <div>Total Amount<span id="ptotal" class="total-bold-text">₹{consolidatedPrice.total}</span></div>
+      <label>Amount Paid: ₹<input class="pamt" id="pamt" type="text" placeholder="Enter the amount" on:keypress={calcPayment} on:keyup={calcPayment} bind:value={paymentDetails.paid}/></label>
+      <div>Balance Due: <span id="pbalance" class="total-bold-text">₹0.00</span></div>
     </div>
 
     <div>
       <div id="invoiceDetails" class="details">
-        <!-- <span class="title2">Invoice Details</span>
-        <label>Invoice No<br/><input id="inumber" class="input-width" type="text"
-          bind:value={invoiceDetails.number}
-        /></label>
-        <label>Invoice Date<br/><input id="idate" type="date" class="input-width"
-          bind:value={invoiceDetails.date}
-        /></label>
-        <label>Invoice Term<br/><input id="iterm" type="text" class="input-width"
-          bind:value={invoiceDetails.term}
-        /></label> -->
-
         <label>Notes<br/><input id="inotes" type="text" class="input-width"
           bind:value={invoiceDetails.notes}
         /></label>
@@ -492,6 +485,14 @@
   .input-width{
     width: 40%;
     margin: 1%;
+  }
+
+  .pamt{
+    width: 20%;
+    font-weight: 600;
+    font-size: 18px;
+    margin: 0;
+    border: #FFFFFF;
   }
 
   #inotes {
