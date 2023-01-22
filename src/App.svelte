@@ -223,6 +223,25 @@
     </div>
 
     <div>
+      <div id="invoiceDetails" class="details">
+        <span class="title2">Invoice Details</span>
+        <label>Invoice No<br/><input id="inumber" class="input-width" type="text"
+          bind:value={invoiceDetails.number}
+        /></label>
+        <label>Invoice Date<br/><input id="idate" type="date" class="input-width"
+          bind:value={invoiceDetails.date}
+        /></label>
+        <label>Invoice Term<br/><input id="iterm" type="text" class="input-width"
+          bind:value={invoiceDetails.term}
+        /></label>
+
+        <label>Notes<br/><input id="inotes" type="text" class="input-width"
+          bind:value={invoiceDetails.notes}
+        /></label>
+      </div>
+    </div>
+    
+    <div>
       <span class="title2">Items</span>
       {#each items as item, id}
         <Item idxid={id} {...item} {handleChange} {removeItem} />
@@ -249,10 +268,10 @@
     <div id="totalBox">
       
       {#if consolidatedPrice.total > 0 && !isNaN(consolidatedPrice.total)}
-      <div class="total-box-child">Subtotal <span class="total-bold-text">₹{consolidatedPrice.subtotal}</span></div>
-      <div class="total-box-child">CGST <span class="total-bold-text">₹{consolidatedPrice.cgst}</span></div>
-      <div class="total-box-child">SGST <span class="total-bold-text">₹{consolidatedPrice.sgst}</span></div>
-      <div class="total-box-child">Total <span class="total-bold-text">₹{consolidatedPrice.total}</span></div>
+      <div class="total-box-child">Subtotal <span class="total-bold-text">₹{consolidatedPrice.subtotal.toFixed(2)}</span></div>
+      <div class="total-box-child">CGST <span class="total-bold-text">₹{consolidatedPrice.cgst.toFixed(2)}</span></div>
+      <div class="total-box-child">SGST <span class="total-bold-text">₹{consolidatedPrice.sgst.toFixed(2)}</span></div>
+      <div class="total-box-child">Total <span class="total-bold-text">₹{consolidatedPrice.total.toFixed(2)}</span></div>
         {:else}
         <div class="total-box-child">Subtotal <span class="total-bold-text">₹0.00</span></div>
         <div class="total-box-child">CGST <span class="total-bold-text">₹0.00</span></div>
@@ -261,24 +280,7 @@
         {/if}
     </div>
 
-    <div>
-      <div id="invoiceDetails" class="details">
-        <span class="title2">Invoice Details</span>
-        <label>Invoice No<br/><input id="inumber" class="input-width" type="text"
-          bind:value={invoiceDetails.number}
-        /></label>
-        <label>Invoice Date<br/><input id="idate" type="date" class="input-width"
-          bind:value={invoiceDetails.date}
-        /></label>
-        <label>Invoice Term<br/><input id="iterm" type="text" class="input-width"
-          bind:value={invoiceDetails.term}
-        /></label>
-
-        <label>Notes<br/><input id="inotes" type="text" class="input-width"
-          bind:value={invoiceDetails.notes}
-        /></label>
-      </div>
-    </div>
+    
     <button type="button" class="generate" on:click={generateInvoice}>
       <i class="fa-regular fa-file"></i> Generate Invoice</button>
     
