@@ -14,10 +14,11 @@
 
 <div class="container">
   <div class="itmbox">
-    <label
+    <label class="name"
       ><input
         id="name"
         type="text"
+        class="name"
         placeholder="Item Name"
         bind:value={name}
         on:input={(e) => handleChange(idxid, e)}
@@ -87,16 +88,19 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 1%;
+    flex-wrap: wrap;
   }
 
   .colcont {
     display: flex;
     flex-direction: column;
     row-gap: 5px;
+    flex-wrap: wrap;
   }
 
   .rowcont {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-between;
   }
@@ -127,7 +131,7 @@
     padding: .4rem;
   }
 
-  #name {
-    width: 50%;
+  .name {
+    width: 70%;
   }
 </style>
