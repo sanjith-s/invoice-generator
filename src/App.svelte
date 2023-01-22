@@ -167,136 +167,158 @@
 
   }
 </script>
+<div>
+<div class="container bg-white">
+  <div class="py-5 text-center">
+    <img class="d-block mx-auto mb-4" src="./public/invoice.png" alt="" width="80">
+    <h1>Invoice Generator</h1>
+    <p>Get your invoice generated through our app for free!!</p>
+  </div>
+  <hr>
+  <form>
+    <div class="invoiceBox row g-5"  id="invoice">
+      <div id="titleBox">
+        <span class="title1"><h2>Invoice</h2></span>
+        <ImgBox />
+      </div>
 
-<div class="heading">
-  <h1>Invoice Generator</h1>
+      <div class="row g-5">
+        <div id="billerDetails" class="details col-lg-6 col-md-12">
+          <h4 class="mb-3">From</h4>
+          <label class="form-label">
+            <input id="bname" type="text" placeholder="Name" class="form-control"
+              bind:value={billerDetails.name}
+            /></label>
+            <br>
+          <label class="form-label">
+            <input id="bemail" type="text" placeholder="Email" class="form-control" 
+              bind:value={billerDetails.email}
+            /></label>
+            <br>
+          <label class="form-label"><input id="baddr1" type="text" placeholder="Address line 1" class="form-control"
+              bind:value={billerDetails.addr1}
+            /></label>
+            <br>
+          <label class="form-label"><input id="baddr2" type="text" placeholder="Address line 2" class="form-control"
+              bind:value={billerDetails.addr2}
+            /></label>
+            <br>
+          <label class="form-label"><input id="bcity" type="text" placeholder="City" class="form-control"
+              bind:value={billerDetails.city}
+            /></label>
+            <br>
+          <label class="form-label"><input id="bzip" type="text" placeholder="Pincode" class="form-control"
+              bind:value={billerDetails.zipcode}
+            /></label>
+            <br>
+          <label class="form-label"><input id="bcontact" type="text" placeholder="Contact No" class="form-control"
+              bind:value={billerDetails.contact}
+            /></label>
+            <br>
+          <label class="form-label"><input id="bgstin" type="text" placeholder="GSTIN" class="form-control"
+              bind:value={billerDetails.gstin}
+            /></label>
+        </div>
+
+        <div id="clientDetails" class="details col-lg-6 col-md-12">
+          <h4 class="mb-3">To</h4>
+          <label class="form-label"><input id="cname" type="text" placeholder="Name" class="form-control" 
+              bind:value={clientDetails.name}
+            /></label>
+            <br>
+          <label class="form-label"><input id="cemail" type="text" placeholder="Email" class="form-control"
+              bind:value={clientDetails.email}
+            /></label>
+            <br>
+          <label class="form-label"><input id="caddr1" type="text" placeholder="Address line 1" class="form-control"
+              bind:value={clientDetails.addr1}
+            /></label>
+            <br>
+          <label class="form-label"><input id="caddr2" type="text" placeholder="Address line 2" class="form-control"
+              bind:value={clientDetails.addr2}
+            /></label>
+            <br>
+          <label class="form-label"><input id="ccity" type="text" placeholder="City" class="form-control"
+              bind:value={clientDetails.city}
+            /></label>
+            <br>
+          <label class="form-label"><input id="czip" type="text" placeholder="Pincode" class="form-control"
+              bind:value={clientDetails.zipcode}
+            /></label>
+            <br>
+          <label class="form-label"><input id="ccontact" type="text" placeholder="Contact No" class="form-control"
+              bind:value={clientDetails.contact}
+            /></label>
+        </div>
+      </div>
+
+      <div class="row g-5">
+        <div id="invoiceDetails"> 
+          <h4 class="mb-3">Invoice Details</h4>
+          <label class="form-label col-lg-6">Invoice No<br/><input id="inumber" class="form-control" type="text"
+            bind:value={invoiceDetails.number}
+          /></label>
+          <label class="form-label col-lg-6">Invoice Date<br/><input id="idate" type="date" class="form-control"
+            bind:value={invoiceDetails.date}
+          /></label>
+          <label class="form-label col-lg-6 ">Invoice Term<br/><input id="iterm" type="text" class="form-control"
+            bind:value={invoiceDetails.term}
+          /></label>
+        </div>
+      </div>
+
+      <div class="row g-5">
+        <h4 class="mb-3">Items</h4>
+        {#each items as item, id}
+          <Item class="form-label" idxid={id} {...item} {handleChange} {removeItem} />
+          <hr/>
+        {/each}
+      </div>
+
+      <button type="button" class="add" on:click={addItem}>
+        <i class="fa-solid fa-plus"/> Add Item</button>
+
+      <div id="totalBox">
+        
+        {#if consolidatedPrice.total > 0 && !isNaN(consolidatedPrice.total)}
+        <div class="total-box-child">Subtotal <span class="total-bold-text">₹{consolidatedPrice.subtotal}</span></div>
+        <div class="total-box-child">CGST <span class="total-bold-text">₹{consolidatedPrice.cgst}</span></div>
+        <div class="total-box-child">SGST <span class="total-bold-text">₹{consolidatedPrice.sgst}</span></div>
+        <div class="total-box-child">Total <span class="total-bold-text">₹{consolidatedPrice.total}</span></div>
+          {:else}
+          <div class="total-box-child">Subtotal <span class="total-bold-text">₹0.00</span></div>
+          <div class="total-box-child">CGST <span class="total-bold-text">₹0.00</span></div>
+          <div class="total-box-child">SGST <span class="total-bold-text">₹0.00</span></div>
+          <div class="total-box-child">Total <span id="totalamt" class="total-bold-text">₹0.00</span></div>
+          {/if}
+      </div>
+
+      <div id="paymentDetails row g-5" class="details">
+        <h4 class="mb-3">Payment Details</h4>
+        <div class="col-lg-6">Total Amount<span id="ptotal" class="total-bold-text">₹{consolidatedPrice.total}</span></div>
+        <div class="row col-lg-6">
+        <label class="form-label">Amount Paid: ₹<input class="pamt form-control" id="pamt" type="text" placeholder="Enter the amount" on:keypress={calcPayment} on:keyup={calcPayment} bind:value={paymentDetails.paid}/></label>
+        </div>
+        <div class="col-lg-6">Balance Due: <span id="pbalance" class="total-bold-text">₹0.00</span></div>
+      </div>
+
+      <div>
+        <div id="invoiceDetails" class="input-group input-group-lg">
+          <label>Notes<br/><input id="inotes" type="text" class="form-control"
+            bind:value={invoiceDetails.notes}
+          /></label>
+        </div>
+      </div>
+      <button type="button" class="generate" on:click={generateInvoice}>
+        <i class="fa-regular fa-file"></i> Generate Invoice</button>
+       
+    </div>
+  </form>
+</div>
 </div>
 
-<form>
-  <div class="invoiceBox"  id="invoice">
-    <div id="titleBox">
-      <span class="title1">Invoice</span>
-      <ImgBox />
-    </div>
-
-    <div class="grid-container">
-      <div id="billerDetails" class="details">
-        <span class="title2">From</span>
-        <label>
-          <input id="bname" type="text" placeholder="Name"
-            bind:value={billerDetails.name}
-          /></label>
-        <label>
-          <input id="bemail" type="text" placeholder="Email"
-            bind:value={billerDetails.email}
-          /></label>
-        <label><input id="baddr1" type="text" placeholder="Address line 1"
-            bind:value={billerDetails.addr1}
-          /></label>
-        <label><input id="baddr2" type="text" placeholder="Address line 2"
-            bind:value={billerDetails.addr2}
-          /></label>
-        <label><input id="bcity" type="text" placeholder="City"
-            bind:value={billerDetails.city}
-          /></label>
-        <label><input id="bzip" type="text" placeholder="Pincode"
-            bind:value={billerDetails.zipcode}
-          /></label>
-        <label><input id="bcontact" type="text" placeholder="Contact No"
-            bind:value={billerDetails.contact}
-          /></label>
-        <label><input id="bgstin" type="text" placeholder="GSTIN"
-            bind:value={billerDetails.gstin}
-          /></label>
-      </div>
-
-      <div id="clientDetails" class="details">
-        <span class="title2">To</span>
-        <label><input id="cname" type="text" placeholder="Name"
-            bind:value={clientDetails.name}
-          /></label>
-        <label><input id="cemail" type="text" placeholder="Email"
-            bind:value={clientDetails.email}
-          /></label>
-        <label><input id="caddr1" type="text" placeholder="Address line 1"
-            bind:value={clientDetails.addr1}
-          /></label>
-        <label><input id="caddr2" type="text" placeholder="Address line 2"
-            bind:value={clientDetails.addr2}
-          /></label>
-        <label><input id="ccity" type="text" placeholder="City"
-            bind:value={clientDetails.city}
-          /></label>
-        <label><input id="czip" type="text" placeholder="Pincode"
-            bind:value={clientDetails.zipcode}
-          /></label>
-        <label><input id="ccontact" type="text" placeholder="Contact No"
-            bind:value={clientDetails.contact}
-          /></label>
-      </div>
-    </div>
-
-    <div>
-      <div id="invoiceDetails" class="details">
-        <span class="title2">Invoice Details</span>
-        <label>Invoice No<br/><input id="inumber" class="input-width" type="text"
-          bind:value={invoiceDetails.number}
-        /></label>
-        <label>Invoice Date<br/><input id="idate" type="date" class="input-width"
-          bind:value={invoiceDetails.date}
-        /></label>
-        <label>Invoice Term<br/><input id="iterm" type="text" class="input-width"
-          bind:value={invoiceDetails.term}
-        /></label>
-      </div>
-    </div>
-
-    <div>
-      <span class="title2">Items</span>
-      {#each items as item, id}
-        <Item idxid={id} {...item} {handleChange} {removeItem} />
-        <hr/>
-      {/each}
-    </div>
-
-    <button type="button" class="add" on:click={addItem}>
-      <i class="fa-solid fa-plus" /> Add Item</button>
-
-    <div id="totalBox">
-      
-      {#if consolidatedPrice.total > 0 && !isNaN(consolidatedPrice.total)}
-      <div class="total-box-child">Subtotal <span class="total-bold-text">₹{consolidatedPrice.subtotal}</span></div>
-      <div class="total-box-child">CGST <span class="total-bold-text">₹{consolidatedPrice.cgst}</span></div>
-      <div class="total-box-child">SGST <span class="total-bold-text">₹{consolidatedPrice.sgst}</span></div>
-      <div class="total-box-child">Total <span class="total-bold-text">₹{consolidatedPrice.total}</span></div>
-        {:else}
-        <div class="total-box-child">Subtotal <span class="total-bold-text">₹0.00</span></div>
-        <div class="total-box-child">CGST <span class="total-bold-text">₹0.00</span></div>
-        <div class="total-box-child">SGST <span class="total-bold-text">₹0.00</span></div>
-        <div class="total-box-child">Total <span id="totalamt" class="total-bold-text">₹0.00</span></div>
-        {/if}
-    </div>
-
-    <div id="paymentDetails" class="details">
-      <span class="title2">Payment Details</span>
-      <div>Total Amount<span id="ptotal" class="total-bold-text">₹{consolidatedPrice.total}</span></div>
-      <label>Amount Paid: ₹<input class="pamt" id="pamt" type="text" placeholder="Enter the amount" on:keypress={calcPayment} on:keyup={calcPayment} bind:value={paymentDetails.paid}/></label>
-      <div>Balance Due: <span id="pbalance" class="total-bold-text">₹0.00</span></div>
-    </div>
-
-    <div>
-      <div id="invoiceDetails" class="details">
-        <label>Notes<br/><input id="inotes" type="text" class="input-width"
-          bind:value={invoiceDetails.notes}
-        /></label>
-      </div>
-    </div>
-    <button type="button" class="generate" on:click={generateInvoice}>
-      <i class="fa-regular fa-file"></i> Generate Invoice</button>
-    
-    
-  </div>
-</form>
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
 <!-- Iconss --> 
 <link
@@ -311,6 +333,13 @@
   @import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
   @import url("https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap");
 
+  #titleBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
   :global(body) {
     box-sizing: border-box;
     min-height: 100vh;
@@ -318,7 +347,7 @@
     padding: 0;
     border: 0;
   }
-
+  
   :global(#app) {
     background-color: #0066ff;
     height: 100%;
@@ -327,6 +356,94 @@
     padding-bottom: 2%;
   }
 
+  form{
+    padding:2%;
+    font-family: "Inter", sans-serif;
+    margin: auto;
+    width: 100%;
+  }
+
+  .generate {
+    background: #0066ff;
+    border-radius: 999px;
+    box-shadow: #005de2 0 10px 20px -10px;
+    box-sizing: border-box;
+    color: #ffffff;
+    cursor: pointer;
+    font-family: Inter, Helvetica, "Apple Color Emoji", "Segoe UI Emoji",
+      NotoColorEmoji, "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji",
+      EmojiSymbols, -apple-system, system-ui, "Segoe UI", Roboto,
+      "Helvetica Neue", "Noto Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    opacity: 1;
+    outline: 0 solid transparent;
+    padding: 8px 18px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: fit-content;
+    word-break: break-word;
+    border: 0;
+    margin: auto;
+  }
+
+  .add{
+  background-color: #FFFFFF;
+  border: 1px solid #222222;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #12B76A;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+  margin: auto;
+  outline: none;
+  padding: 13px 23px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  touch-action: manipulation;
+  transition: box-shadow .2s,-ms-transform .1s,-webkit-transform .1s,transform .1s;
+  user-select: none;
+  -webkit-user-select: none;
+  width: auto;
+}
+
+.add:focus-visible {
+  box-shadow: #14B789 0 0 0 2px, rgba(255, 255, 255, 0.8) 0 0 0 4px;
+  transition: box-shadow .2s;
+}
+
+.add:active {
+  background-color: #F7F7F7;
+  border-color: #14B789;
+  transform: scale(.96);
+}
+
+.add:disabled {
+  border-color: #DDDDDD;
+  color: #DDDDDD;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.total-box-child {
+    text-align: right;
+  }
+
+  .total-bold-text {
+    font-weight: 600;
+    font-size: 18px;
+    margin-left: 1rem;
+  }
+
+
+  /*
   form {
     height: 100%;
     font-family: "Inter", sans-serif;
@@ -389,74 +506,7 @@
     background-color:#f8f8f8;
 }
 
-  .generate {
-    background: #0066ff;
-    border-radius: 999px;
-    box-shadow: #005de2 0 10px 20px -10px;
-    box-sizing: border-box;
-    color: #ffffff;
-    cursor: pointer;
-    font-family: Inter, Helvetica, "Apple Color Emoji", "Segoe UI Emoji",
-      NotoColorEmoji, "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji",
-      EmojiSymbols, -apple-system, system-ui, "Segoe UI", Roboto,
-      "Helvetica Neue", "Noto Sans", sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 24px;
-    opacity: 1;
-    outline: 0 solid transparent;
-    padding: 8px 18px;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    width: fit-content;
-    word-break: break-word;
-    border: 0;
-  }
-
-  .add{
-  background-color: #FFFFFF;
-  border: 1px solid #222222;
-  border-radius: 8px;
-  box-sizing: border-box;
-  color: #12B76A;
-  cursor: pointer;
-  display: inline-block;
-  font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 20px;
-  margin: 0;
-  outline: none;
-  padding: 13px 23px;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  touch-action: manipulation;
-  transition: box-shadow .2s,-ms-transform .1s,-webkit-transform .1s,transform .1s;
-  user-select: none;
-  -webkit-user-select: none;
-  width: auto;
-}
-
-.add:focus-visible {
-  box-shadow: #14B789 0 0 0 2px, rgba(255, 255, 255, 0.8) 0 0 0 4px;
-  transition: box-shadow .2s;
-}
-
-.add:active {
-  background-color: #F7F7F7;
-  border-color: #14B789;
-  transform: scale(.96);
-}
-
-.add:disabled {
-  border-color: #DDDDDD;
-  color: #DDDDDD;
-  cursor: not-allowed;
-  opacity: 1;
-}
-
+ 
   #titleBox {
     display: flex;
     flex-direction: row;
@@ -497,5 +547,5 @@
 
   #inotes {
     height: 2.5rem;
-  }
+  } */
 </style>
