@@ -302,30 +302,23 @@
         <div class="col-lg-6">Balance Due: <span id="pbalance" class="total-bold-text">₹0.00</span></div>
       </div>
 
-    <div>
-      <div id="invoiceDetails" class="details">
-        <span class="title2">Invoice Details</span>
-        <label>Invoice No<br/><input id="inumber" class="input-width" type="text"
-          bind:value={invoiceDetails.number}
-        /></label>
-        <label>Invoice Date<br/><input id="idate" type="date" class="input-width"
-          bind:value={invoiceDetails.date}
-        /></label>
-        <label>Invoice Term<br/><input id="iterm" type="text" class="input-width"
-          bind:value={invoiceDetails.term}
-        /></label>
-
-        <label>Notes<br/><input id="inotes" type="text" class="input-width"
-          bind:value={invoiceDetails.notes}
-        /></label>
+      <div>
+        <div id="invoiceDetails" class="input-group input-group-lg">
+          <label>Notes<br/><input id="inotes" type="text" class="form-control"
+            bind:value={invoiceDetails.notes}
+          /></label>
+        </div>
       </div>
+      <button type="button" class="generate" on:click={generateInvoice}>
+        <i class="fa-regular fa-file"></i> Generate Invoice</button>
+       
     </div>
-    <button type="button" class="generate" on:click={generateInvoice}>
-      <i class="fa-regular fa-file"></i> Generate Invoice</button>
-    
-    
-  </div>
-</form>
+  </form>
+</div>
+</div>
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
 <!-- Iconss --> 
 <link
