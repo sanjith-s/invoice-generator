@@ -66,10 +66,24 @@
     total: 0,
   }
 
+  const generatePDF = () => {
+    const element = document.getElementById("invoice");
+        html2pdf()
+          .from(element)
+          .save();
+  }
+
   const handleChange = (id, e) => {
     //console.log(id, e.target.id, e.target.value);
     let nameKey = e.target.id;
-    items[id][nameKey] = e.target.value;
+
+
+    let value = e.target.value
+    if(nameKey=="gst") {
+      if(parseFloat(e.target.value)>100) value = "100"
+      else if(parseFloat(e.target.value)<0) value = "0"
+    }
+    items[id][nameKey] = value;
     
     //console.log(items);
 
@@ -174,7 +188,7 @@
 
   }
 </script>
-<div>
+
 <div class="container bg-white">
   <div class="py-5 text-center">
     <img class="d-block mx-auto mb-4" src="./public/invoice.png" alt="" width="80">
@@ -288,7 +302,7 @@
       <div id="totalBox">
         
         {#if consolidatedPrice.total > 0 && !isNaN(consolidatedPrice.total)}
-        <div class="total-box-child">Subtotal <span class="total-bold-text">₹{consolidatedPrice.subtotal}</span></div>
+        <div class="total-box-child">Subtotal <span class="total-bold-text">₹{consolidatedPrice.subtotal.toFixed(2)}</span></div>
         <div class="total-box-child">CGST <span class="total-bold-text">₹{consolidatedPrice.cgst}</span></div>
         <div class="total-box-child">SGST <span class="total-bold-text">₹{consolidatedPrice.sgst}</span></div>
         <div class="total-box-child">Total <span class="total-bold-text">₹{consolidatedPrice.total}</span></div>
@@ -316,12 +330,11 @@
           /></label>
         </div>
       </div>
-      <button type="button" class="generate" on:click={generateInvoice}>
+      <button type="button" class="generate" on:click={generatePDF}>
         <i class="fa-regular fa-file"></i> Generate Invoice</button>
        
     </div>
   </form>
-</div>
 </div>
 
 <!-- Bootstrap -->
@@ -345,6 +358,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
   }
   
   :global(body) {
