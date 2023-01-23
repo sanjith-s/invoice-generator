@@ -66,6 +66,13 @@
     total: 0,
   }
 
+  const generatePDF = () => {
+    const element = document.getElementById("invoice");
+        html2pdf()
+          .from(element)
+          .save();
+  }
+
   const handleChange = (id, e) => {
     //console.log(id, e.target.id, e.target.value);
     let nameKey = e.target.id;
@@ -316,7 +323,7 @@
           /></label>
         </div>
       </div>
-      <button type="button" class="generate" on:click={generateInvoice}>
+      <button type="button" class="generate" on:click={generatePDF}>
         <i class="fa-regular fa-file"></i> Generate Invoice</button>
        
     </div>
