@@ -155,11 +155,18 @@
     console.log(invoice);
     // console.log(window);
     var opt={
-      margin: 1,
+      margin: 0,
+      // margin: 1,
       filename: 'invoice.pdf',
-      image: {type:'jpeg', quality: 1},
-      html2canvas: {scale: 2},
-      jsPDF: {unit: 'in', format: 'letter', orientation: 'portrait'}
+      image: {type:'jpeg', quality: 100},
+      html2canvas: {
+        scale:1,
+        letterRendering: true,
+        useCORS: true
+      },
+      // html2canvas: {scale: 2},
+      // jsPDF: {unit: 'in', format: 'letter', orientation: 'portrait'},
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait'}
     }
 
     // @ts-ignore
@@ -175,15 +182,15 @@
     <p>Get your invoice generated through our app for free!!</p>
   </div>
   <hr>
-  <form>
-    <div class="invoiceBox row g-5"  id="invoice">
+  <form id="invoice">
+    <div class="invoiceBox row g-5">
       <div id="titleBox">
-        <span class="title1"><h2>Invoice</h2></span>
+        <h2>Invoice</h2>
         <ImgBox />
       </div>
 
       <div class="row g-5">
-        <div id="billerDetails" class="details col-lg-6 col-md-12">
+        <div id="billerDetails" class="col-lg-6 col-md-12">
           <h4 class="mb-3">From</h4>
           <label class="form-label">
             <input id="bname" type="text" placeholder="Name" class="form-control"
@@ -390,162 +397,55 @@
   }
 
   .add{
-  background-color: #FFFFFF;
-  border: 1px solid #222222;
-  border-radius: 8px;
-  box-sizing: border-box;
-  color: #12B76A;
-  cursor: pointer;
-  display: inline-block;
-  font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 20px;
-  margin: auto;
-  outline: none;
-  padding: 13px 23px;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  touch-action: manipulation;
-  transition: box-shadow .2s,-ms-transform .1s,-webkit-transform .1s,transform .1s;
-  user-select: none;
-  -webkit-user-select: none;
-  width: auto;
-}
-
-.add:focus-visible {
-  box-shadow: #14B789 0 0 0 2px, rgba(255, 255, 255, 0.8) 0 0 0 4px;
-  transition: box-shadow .2s;
-}
-
-.add:active {
-  background-color: #F7F7F7;
-  border-color: #14B789;
-  transform: scale(.96);
-}
-
-.add:disabled {
-  border-color: #DDDDDD;
-  color: #DDDDDD;
-  cursor: not-allowed;
-  opacity: 1;
-}
-
-.total-box-child {
-    text-align: right;
-  }
-
-  .total-bold-text {
-    font-weight: 600;
-    font-size: 18px;
-    margin-left: 1rem;
-  }
-
-
-  /*
-  form {
-    height: 100%;
-    font-family: "Inter", sans-serif;
+    background-color: #FFFFFF;
+    border: 1px solid #222222;
+    border-radius: 8px;
+    box-sizing: border-box;
+    color: #12B76A;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif;
     font-size: 16px;
-    margin: auto;
-    width: 100%;
-  }
-
-  .grid-container {
-    display: grid;
-    grid-template-columns: 50% 50%;
-  }
-
-  .details {
-    display: flex;
-    flex-direction: column;
-    row-gap: 10px;
-    justify-content: space-around;
-    padding: 10px;
-  }
-
-  .invoiceBox {
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    row-gap: 30px;
-    width: auto;
-    padding: 20px;
-    border-radius: 10px;
-  }
-
-  .title2 {
-    font-size: 20px;
-  }
-
-  .title1 {
-    font-size: 48px;
     font-weight: 600;
-  }
-
-  .heading h1 {
+    line-height: 20px;
+    margin: auto;
+    outline: none;
+    padding: 13px 23px;
+    position: relative;
     text-align: center;
-    font-size:30px; font-weight:300; color:#222; letter-spacing:5px;
-    text-transform: uppercase;
-    color:white;
-    display: grid;
-    width:100%;
-    grid-template-columns: 1fr max-content 1fr;
-    grid-template-rows: 20px 0;
-    grid-gap: 20px;
-    align-items: center;
-}
-
-  .heading h1:after,.heading h1:before {
-    content: " ";
-    display: block;
-    border-bottom: 1px solid #000;
-    border-top: 1px solid #000;
-    height: 4px;
-    background-color:#f8f8f8;
-}
-
- 
-  #titleBox {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    text-decoration: none;
+    touch-action: manipulation;
+    transition: box-shadow .2s,-ms-transform .1s,-webkit-transform .1s,transform .1s;
+    user-select: none;
+    -webkit-user-select: none;
+    width: auto;
   }
-  
+
+  .add:focus-visible {
+    box-shadow: #14B789 0 0 0 2px, rgba(255, 255, 255, 0.8) 0 0 0 4px;
+    transition: box-shadow .2s;
+  }
+
+  .add:active {
+    background-color: #F7F7F7;
+    border-color: #14B789;
+    transform: scale(.96);
+  }
+
+  .add:disabled {
+    border-color: #DDDDDD;
+    color: #DDDDDD;
+    cursor: not-allowed;
+    opacity: 1;
+  }
+
   .total-box-child {
-    text-align: right;
-  }
+      text-align: right;
+    }
 
   .total-bold-text {
     font-weight: 600;
     font-size: 18px;
     margin-left: 1rem;
   }
-
-  input {
-    background: #FFFFFF;
-    border: 1px solid #B9B9B9;
-    border-radius: 4px;
-    padding: .4rem;
-    width: 50%;
-  }
-
-  .input-width{
-    width: 40%;
-    margin: 1%;
-  }
-
-  .pamt{
-    width: 20%;
-    font-weight: 600;
-    font-size: 18px;
-    margin: 0;
-    border: #FFFFFF;
-  }
-
-  #inotes {
-    height: 2.5rem;
-  } */
 </style>
