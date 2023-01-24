@@ -1,5 +1,9 @@
 # Svelte + Vite
 
+<h3>Figma Design Link: </h3>
+
+https://www.figma.com/file/MJniFGpd25Lzh1JnF1v8pc/Group-55-Figma-Design?node-id=0%3A1&t=0f4GQY6JigEDhEqm-1
+
 This template should help get you started developing with Svelte in Vite.
 
 The entry point for the app can be found in /src/App.svelte.
