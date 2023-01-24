@@ -15,7 +15,10 @@
     "vite": "^3.0.4"
   },
   "dependencies": {
+<<<<<<< HEAD
     "jspdf": "^2.5.1",
+=======
+>>>>>>> ac8bfa283414fde3522b921a5ee058d0f3cb5b26
     "jspdf-autotable": "^3.5.28",
     "svelte-icons": "^2.1.0"
   }
