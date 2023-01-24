@@ -1,9 +1,11 @@
-  <script>
+<script>
 // @ts-nocheck
 
   import { HtmlTag } from "svelte/internal";
   import ImgBox from "./lib/ImgBox.svelte";
   import Item from "./lib/Item.svelte";
+  import jsPDF from 'jspdf';
+  import autoTable from 'jspdf-autotable';
 
   let invoice = {
     number: "",
@@ -64,13 +66,6 @@
     cgst: 0,
     sgst: 0,
     total: 0,
-  }
-
-  const generatePDF = () => {
-    const element = document.getElementById("invoice");
-        html2pdf()
-          .from(element)
-          .save();
   }
 
   const handleChange = (id, e) => {
@@ -163,6 +158,12 @@
     console.log(total);
   }
 
+  var specialElementHandler = {
+    "#editor":function(element, renderer){
+      return true;
+    }
+  }
+
   function generateInvoice() {
     // Generate the invoice
     const invoice = document.getElementById("invoice");
@@ -185,13 +186,12 @@
 
     // @ts-ignore
     html2pdf().from(invoice).set(opt).save();
-
   }
 </script>
 
 <div class="container bg-white">
   <div class="py-5 text-center">
-    <img class="d-block mx-auto mb-4" src="./public/invoice.png" alt="" width="80">
+    <img class="d-block mx-auto mb-4" src="./invoice.png" alt="" width="80">
     <h1>Invoice Generator</h1>
     <p>Get your invoice generated through our app for free!!</p>
   </div>
@@ -330,7 +330,7 @@
           /></label>
         </div>
       </div>
-      <button type="button" class="generate" on:click={generatePDF}>
+      <button type="button" class="generate" on:click={generateInvoice}>
         <i class="fa-regular fa-file"></i> Generate Invoice</button>
        
     </div>
