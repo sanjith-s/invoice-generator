@@ -1,18 +1,22 @@
 <script>
   import FaFileUpload from "svelte-icons/fa/FaFileUpload.svelte";
   import FaTimesCircle from "svelte-icons/fa/FaTimesCircle.svelte";
-
+  export let imageData;
+  export let storeImg;
+  
   let uploaded = false,
     fileinput,
     imageURI;
 
   const onFileSelected = (e) => {
-    let image = e.target.files[0];
+    let img = e.target.files[0];
     let reader = new FileReader();
-    reader.readAsDataURL(image);
+    reader.readAsDataURL(img);
     reader.onload = (e) => {
       uploaded = true;
       imageURI = e.target.result;
+      imageData = reader.result;
+      storeImg(imageData);
     };
   };
 

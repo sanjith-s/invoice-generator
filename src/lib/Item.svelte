@@ -125,10 +125,10 @@
   }
 
   input {
-    background: #FFFFFF;
-    border: 1px solid #B9B9B9;
+    background: #ffffff;
+    border: 1px solid #b9b9b9;
     border-radius: 4px;
-    padding: .4rem;
+    padding: 0.4rem;
   }
 
   .name {
